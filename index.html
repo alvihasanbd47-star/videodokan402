@@ -430,7 +430,13 @@
     </style>
 </head>
 <body>
-
+<!-- Urgent Notice Bar Start -->
+<div class="notice-bar" id="homeNotice" style="display: block;">
+    <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+        📢 <b>জরুরি নোটিশ:</b> আমাদের সাইটের কোনো মুভি বা ভিডিও প্লে করতে সমস্যা হলে অথবা লিংক কাজ না করলে, দ্রুত আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে জানান। নতুন নতুন মুভি সবার আগে পেতে সাইটটি বুকমার্ক করে রাখুন! ধন্যবাদ। 🔥🎬
+    </marquee>
+</div>
+<!-- Urgent Notice Bar End -->
 <div class="wrapper">
     <div class="logo" onclick="showHomeScreen()">🔥 VideoDokan</div>
 
@@ -464,7 +470,7 @@
         <div class="glass">
             <div class="notice-bar">
                 <marquee behavior="scroll" direction="left" scrollamount="6">
-                    📢 URGENT NOTICE: সবাইকে জানানো যাচ্ছে যে কিছু কিছু ভিডিও সরাসরি upload করা যায় না তাই নিচের জেনারেট বাটনে ক্লিক করুন!
+                    📢 URGENT NOTICE: সবাইকে জানানো যাচ্ছে যে কিছু কিছু ভিডিও সরাসরি upload করা যায় না তাই নিচের play বাটনে ক্লিক করুন!
                 </marquee>
             </div>
 
@@ -619,6 +625,7 @@ function popupTelegramClick() {
 
 // মুভি ডিটেইলস স্ক্রিন ওপেন করার মূল ফাংশন
 function openMovieDetails(id) {
+document.getElementById('homeNotice').style.display = 'none';
     const movie = movieDatabase.find(m => m.id === id);
     if(!movie) return;
 
@@ -646,7 +653,7 @@ function resetActionButtons() {
 }
 
 function showHomeScreen() {
-    document.getElementById('detailsScreen').style.display = 'none';
+  document.getElementById('homeNotice').style.display = 'block';  document.getElementById('detailsScreen').style.display = 'none';
     document.getElementById('homeScreen').style.display = 'block';
 }
 
