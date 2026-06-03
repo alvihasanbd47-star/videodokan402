@@ -430,51 +430,57 @@
     </style>
 </head>
 <body>
-    <!-- Age Verification Popup Start -->
+
+<!-- Age Verification Popup Start -->
 <div id="ageOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px); z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; padding: 20px; box-sizing: border-box;">
     <div style="background: #141414; border: 2px solid #ff0055; padding: 40px 30px; border-radius: 15px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(255, 0, 85, 0.3); color: #fff;">
-        <!-- ওয়ার্নিং আইকন বা লোগো -->
         <div style="font-size: 50px; color: #ff0055; margin-bottom: 15px; animation: pulse 2s infinite;">⚠️</div>
-        
         <h2 style="font-size: 26px; margin: 0 0 15px 0; color: #ff0055; font-weight: bold; uppercase; letter-spacing: 1px;">WARNING: 18+ ONLY</h2>
-        
         <p style="font-size: 15px; line-height: 1.6; color: #cccccc; margin: 0 0 30px 0;">
-            এই ওয়েবসাইটটিতে প্রাপ্তবয়স্কদের জন্য উপযোগী কনটেন্ট বা মুভি থাকতে পারে। আপনার বয়স কি ১৮ বছর বা তার বেশি?
+            এই ওয়েবসাইটটিতে প্রাপ্তবয়স্কদের জন্য উপযোগী কনটেন্ট বা মুভি থাকতে পারে। আপনার বয়স কি ১৮ বছর বা তার বেশি?
         </p>
-        
-        <!-- বাটনসমূহ -->
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <button onclick="acceptAge()" style="background: #ff0055; color: #fff; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); flex: 1; min-width: 140px;">
+            <button onclick="acceptAge()" style="background: linear-gradient(135deg, #ffcc00, #ff0055); color: #fff; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); flex: 1; min-width: 140px;">
                 হ্যাঁ, আমি ১৮+
             </button>
-            <button onclick="leaveSite()" style="background: #222; color: #fff; border: 2px solid #555; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; flex: 1; min-width: 140px;">
+            <button onclick="leaveSite()" style="background: linear-gradient(135deg, #ccc, #333); color: #fff; border: 2px solid #555; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; flex: 1; min-width: 140px;">
                 না, বের হব
             </button>
         </div>
     </div>
 </div>
-<!-- Age Verification Popup End -->
+
+<style>
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+</style>
+
 <!-- Urgent Notice Bar Start -->
 <div class="notice-bar" id="homeNotice" style="display: block;">
     <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
-        📢 <b>জরুরি নোটিশ:</b> আমাদের সাইটের কোনো মুভি বা ভিডিও প্লে করতে সমস্যা হলে অথবা লিংক কাজ না করলে, দ্রুত আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে জানান। নতুন নতুন মুভি সবার আগে পেতে সাইটটি বুকমার্ক করে রাখুন! ধন্যবাদ। 🔥🎬
+        📢 <b>জরুরি নোটিশ:</b> আমাদের সাইটের কোনো মুভি বা ভিডিও প্লে করতে সমস্যা হলে অথবা লিংক কাজ না করলে, দ্রুত আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে জানান। নতুন নতুন মুভি সবার আগে পেতে সাইটটি বুকমার্ক করে রাখুন! ধন্যবাদ। 🔥🎬
     </marquee>
 </div>
 <!-- Urgent Notice Bar End -->
+
 <div class="wrapper">
-    <div class="logo" onclick="showHomeScreen()">🔥 VideoDokan</div>
+    <div class="logo" onclick="goToHomeScreen()">🔥 VideoDokan</div>
 
     <!-- ================= SCREEN ১: হোমপেজ ================= -->
     <div id="homeScreen">
         <div class="search-container">
             <input type="text" id="searchBar" class="search-input" placeholder="মুভি খুঁজুন..." onkeyup="searchMovies()">
         </div>
-<div class="category-container" style="text-align: center; margin: 15px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-    <button class="cat-btn active" onclick="filterCategory('All')" style="background: #ff0055; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">All</button>
-    <button class="cat-btn" onclick="filterCategory('Action')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Action</button>
-    <button class="cat-btn" onclick="filterCategory('Romantic')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Romantic</button>
-    <button class="cat-btn" onclick="filterCategory('Viral')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Viral</button>
-</div>
+        <div class="category-container" style="text-align: center; margin: 15px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <button class="cat-btn active" onclick="filterCategory('All')" style="background: #ff0055; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">All</button>
+            <button class="cat-btn" onclick="filterCategory('Action')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Action</button>
+            <button class="cat-btn" onclick="filterCategory('Romantic')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Romantic</button>
+            <button class="cat-btn" onclick="filterCategory('Viral')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Viral</button>
+        </div>
+        
         <!-- হোমপেজ ব্যানার বিজ্ঞাপন -->
         <div class="home-ad-box">
             <script>
@@ -494,12 +500,12 @@
 
     <!-- ================= SCREEN ২: ডিটেইলস কার্ড ================= -->
     <div id="detailsScreen">
-        <button class="back-btn" onclick="showHomeScreen()">⬅ ফিরে যান</button>
+        <button class="back-btn" onclick="goToHomeScreen()">⬅ ফিরে যান</button>
         
         <div class="glass">
             <div class="notice-bar">
                 <marquee behavior="scroll" direction="left" scrollamount="6">
-                    📢 URGENT NOTICE: সবাইকে জানানো যাচ্ছে যে কিছু কিছু ভিডিও সরাসরি upload করা যায় না তাই নিচের play বাটনে ক্লিক করুন!
+                    📢 URGENT NOTICE: সবাইকে জানানো যাচ্ছে যে কিছু কিছু ভিডিও সরাসরি upload করা যায় না তাই নিচের play বাটনে ক্লিক করুন!
                 </marquee>
             </div>
 
@@ -523,7 +529,7 @@
 
             <button id="mainActionButton" class="btn download" onclick="triggerAdAndTimer('download')">⬇ Generate Download Link</button>
 
-            <!-- Banner Ads Area (৩০০x২৫০ ব্যানার) -->
+            <!-- Banner Ads Area -->
             <div class="ad-box">
                 <div class="ad-unit">
                     <script>
@@ -549,7 +555,7 @@
     <div class='custom-popup-content'>
         <span class='custom-popup-close' onclick='closeBlogPopup()'>&#10005;</span>
         <h2>🎉 Welcome</h2>
-        <p>আরও নতুন নতুন ভাইরাল ভিডিও পেতে এখনই আমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন।</p>
+        <p>আরও নতুন নতুন ভাইরাল ভিডিও পেতে এখনই আমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন.</p>
         <a href='https://t.me/videodokan402' style='text-decoration:none;' target='_blank' onclick="popupTelegramClick()">
             <button class='custom-popup-btn'>🚀 Join Telegram</button>
         </a>
@@ -557,8 +563,8 @@
 </div>
 
 <script>
-// ==================== আপনার মুভি ডাটাবেজ এরিয়া ====================
-const ADSTERRA_DIRECT_LINK = "https://www.highperformanceformat.com/your_direct_link_here"; // আপনার Adsterra Direct Link এখানে দিন
+// ==================== মুভি ডাটাবেজ ====================
+const ADSTERRA_DIRECT_LINK = "https://www.highperformanceformat.com/your_direct_link_here"; 
 
 const movieDatabase = [
     {
@@ -570,39 +576,20 @@ const movieDatabase = [
     },
     {
         id: 2,
-        title: "🎬Thecher viral video",
-        poster: "https://i.ibb.co.com/8DYx3C6q/image.png", 
-        playLink: "https://terasharefile.com/s/1aNZiZsHyai0ruGLNjv4Bww",      
-        downloadLink: "hhttps://terasharefile.com/s/1aNZiZsHyai0ruGLNjv4Bww" 
-    },
-        {
-        id: 2,
-        title: "🎬 New vairal Video",
-        category: "Viral", // <-- এই মুভিটি 'Viral' ক্যাটাগরির
-        poster: "https://i.ibb.co.com/8nL89kx6/image.png", 
-        playLink: "https://terasharefile.com/s/1sOTx4qyrgW0o1vvjvren4Q",      
-        downloadLink: "https://terasharefile.com/s/1sOTx4qyrgW0o1vvjvren4Q" 
+        title: "🎬 Pushpa 2: The Rule (2025)",
+        poster: "https://i.ibb.co.com/wFqmqs5L/image.png", 
+        playLink: "https://terasharefile.com/s/play_link_2",      
+        downloadLink: "https://terasharefile.com/s/download_link_2" 
     },
     {
-        id: 1,
-        title: "bangla techer video",
-        category: "Viral", // <-- এই মুভিটি 'Viral' ক্যাটাগরির
-        poster: "https://i.ibb.co.com/JwNQBHSY/image.png",
-        playLink: "https://terasharefile.com/s/1BXbjtproBDOjKT1YJ_S-Lg",      
-        downloadLink: "https://terasharefile.com/s/1BXbjtproBDOjKT1YJ_S-Lg" 
-    },
-    {
-        id: 1,
-        title: "কছি গফ",
-        category: "Viral", // <-- এই মুভিটি 'Viral' ক্যাটাগরির
-        poster: "https://i.ibb.co.com/B5pVNrSp/image.png",
-        playLink: "https://terasharefile.com/s/1N4gj3dWfHqzVNonYwdBTGQ",      
-        downloadLink: "https://terasharefile.com/s/1N4gj3dWfHqzVNonYwdBTGQ" 
-    },
- 
-
+        id: 3,
+        title: "🎬 Pushpa 2: The Rule (2025) Viral Version",
+        category: "Viral",
+        poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format&fit=crop&q=60", 
+        playLink: "https://terasharefile.com/s/play_link_2",      
+        downloadLink: "https://terasharefile.com/s/download_link_2" 
+    }
 ];
-// ==========================================================
 
 function renderMovies(movies) {
     const grid = document.getElementById('movieGridBox');
@@ -610,8 +597,7 @@ function renderMovies(movies) {
     movies.forEach(movie => {
         const item = document.createElement('div');
         item.className = 'movie-item';
-        // মুভিতে ক্লিক করলে পপআপ আসবে
-        item.onclick = () => triggerMoviePopup(movie.id);
+        item.onclick = () => goToMoviePage(movie.id);
         item.innerHTML = `
             <div class="poster-wrap"><span class="grid-badge">New</span><img src="${movie.poster}" alt="${movie.title}"></div>
             <div class="movie-meta-title">${movie.title}</div>
@@ -630,50 +616,58 @@ let selectedPlayLink = "";
 let selectedDownloadLink = "";
 let finalRedirectLink = "";
 let activeTimer = null;
-let currentPendingMovieId = null; // মুভি আইডি ট্র্যাক রাখার জন্য
+let currentPendingMovieId = null;
 
-// ১. সাইটে ঢোকার সময় অটোমেটিক পপআপ দেখানোর স্ক্রিপ্ট (৩ সেকেন্ড পর)
+// ১. সাইটে ঢোকার সময় অটোমেটিক পপআপ দেখানোর স্ক্রিপ্ট (৩ সেকেন্ড পর)
+// হোম পেজ বা মুভি লিংক—সবক্ষেত্রেই ৩ সেকেন্ড পর পপআপটি আসবে
 setTimeout(() => {
-    // যদি ইউজার ইতিমধ্যে কোনো মুভিতে ক্লিক না করে থাকে, তবেই অটো পপআপ আসবে
     if (document.getElementById('blogPopup').style.display !== 'flex') {
-        currentPendingMovieId = null; // অটো পপআপের জন্য মুভি আইডি ফাঁকা থাকবে
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieId = urlParams.get('movie');
+        if (movieId) {
+            currentPendingMovieId = parseInt(movieId);
+        } else {
+            currentPendingMovieId = null;
+        }
+        
         document.getElementById('blogPopup').style.display = 'flex';
     }
 }, 3000);
 
-// ২. হোম পেজের মুভিতে ক্লিক করার পর পপআপ দেখানোর স্ক্রিপ্ট
-function triggerMoviePopup(id) {
-    currentPendingMovieId = id; // মুভি আইডি সেভ করা হলো
-    document.getElementById('blogPopup').style.display = 'flex'; // পপআপ শো হলো
+function goToMoviePage(movieId) {
+    window.location.search = `?movie=${movieId}`;
 }
 
-// ৩. পপআপের ক্লোজ (X) বাটনে ক্লিক করলে অ্যাড আসবে এবং মুভি থাকলে মুভি পেজে যাবে
+function goToHomeScreen() {
+    window.location.search = "";
+}
+
+// ৪. পপআপের ক্লোজ (X) বাটনে ক্লিক করার ও অ্যাড ওপেন হওয়ার সিস্টেম
 function closeBlogPopup() {
     document.getElementById('blogPopup').style.display = 'none';
-    // বিজ্ঞাপনের ডাইরেক্ট লিংকটি নতুন ট্যাবে ওপেন হবে
     window.open('https://www.effectivegatecpm.com/v1ja5a8iei?key=51349c86e5fbf4f4ef87f2543144b9bd', '_blank');
     
-    // মুভিতে ক্লিক করে পপআপ এসে থাকলে মুভি ডিটেইলস পেজ ওপেন হবে
-    if (currentPendingMovieId !== null) {
-        openMovieDetails(currentPendingMovieId);
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.get('movie') && currentPendingMovieId !== null) {
+        goToMoviePage(currentPendingMovieId);
         currentPendingMovieId = null;
     }
 }
 
-// ৪. পপআপের টেলিগ্রাম বাটনে ক্লিক করলে ডিটেইলস পেজে নিয়ে যাবে
+// ৫. পপআপের টেলিগ্রাম বাটনে ক্লিক
 function popupTelegramClick() {
     setTimeout(() => {
         document.getElementById('blogPopup').style.display = 'none';
-        if (currentPendingMovieId !== null) {
-            openMovieDetails(currentPendingMovieId);
+        const urlParams = new URLSearchParams(window.location.search);
+        if (!urlParams.get('movie') && currentPendingMovieId !== null) {
+            goToMoviePage(currentPendingMovieId);
             currentPendingMovieId = null;
         }
     }, 500);
 }
 
-// মুভি ডিটেইলস স্ক্রিন ওপেন করার মূল ফাংশন
 function openMovieDetails(id) {
-document.getElementById('homeNotice').style.display = 'none';
+    document.getElementById('homeNotice').style.display = 'none';
     const movie = movieDatabase.find(m => m.id === id);
     if(!movie) return;
 
@@ -698,11 +692,6 @@ function resetActionButtons() {
     actionBtn.style.background = "linear-gradient(135deg, #e11d48, #be123c)";
     actionBtn.setAttribute("onclick", "triggerAdAndTimer('download')");
     countdownBox.style.display = 'none';
-}
-
-function showHomeScreen() {
-  document.getElementById('homeNotice').style.display = 'block';  document.getElementById('detailsScreen').style.display = 'none';
-    document.getElementById('homeScreen').style.display = 'block';
 }
 
 function triggerAdAndTimer(type) {
@@ -739,10 +728,7 @@ function triggerAdAndTimer(type) {
     }, 1000);
 }
 
-renderMovies(movieDatabase);
-// ক্যাটাগরি ফিল্টার করার সঠিক ফাংশন
 function filterCategory(categoryName) {
-    // ১. বাটনগুলোর কালার পরিবর্তন করা
     const buttons = document.querySelectorAll('.cat-btn');
     buttons.forEach(btn => {
         if (btn.innerText === categoryName) {
@@ -754,37 +740,24 @@ function filterCategory(categoryName) {
         }
     });
 
-    // ২. ক্যাটাগরি অনুযায়ী মুভি ফিল্টার করা
     let filteredMovies;
     if (categoryName === 'All') {
         filteredMovies = movieDatabase;
     } else {
         filteredMovies = movieDatabase.filter(movie => movie.category === categoryName);
     }
-
-    // ৩. আপনার সাইটের আসল ফাংশনটি কল করা (যা স্ক্রিনে মুভি দেখায়)
-    if (typeof displayMovies === 'function') {
-        displayMovies(filteredMovies);
-    } else if (typeof renderMovies === 'function') {
-        renderMovies(filteredMovies);
-    } else if (typeof loadMovies === 'function') {
-        loadMovies(filteredMovies);
-    } else if (typeof showMovies === 'function') {
-        showMovies(filteredMovies);
-    }
+    renderMovies(filteredMovies);
 }
-    // ১. ইউজার ১৮+ নিশ্চিত করলে পপ-আপ বন্ধ হবে এবং ব্রাউজারে সেভ থাকবে
+
 function acceptAge() {
     localStorage.setItem('userAgeVerified', 'true');
     document.getElementById('ageOverlay').style.display = 'none';
 }
 
-// ২. ইউজার 'না' চাপলে তাকে অন্য নিরাপদ সাইটে (যেমন গুগলে) পাঠিয়ে দেওয়া হবে
 function leaveSite() {
     window.location.href = "https://www.google.com";
 }
 
-// ৩. পেজ লোড হওয়ার সাথে সাথে চেক করবে ইউজার আগে ভেরিফাই করেছে কিনা
 function checkAgeVerification() {
     if (localStorage.getItem('userAgeVerified') === 'true') {
         document.getElementById('ageOverlay').style.display = 'none';
@@ -793,8 +766,24 @@ function checkAgeVerification() {
     }
 }
 
-// পেজ লোড হওয়া মাত্রই পপ-আপ চেক করার ফাংশনটি চালু হবে
-window.addEventListener('DOMContentLoaded', checkAgeVerification);
+function checkDirectMovieLink() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('movie');
+
+    if (movieId) {
+        const selectedMovie = movieDatabase.find(movie => movie.id == movieId);
+        if (selectedMovie) {
+            openMovieDetails(selectedMovie.id);
+        }
+    }
+}
+
+renderMovies(movieDatabase);
+
+window.addEventListener('DOMContentLoaded', () => {
+    checkAgeVerification(); 
+    checkDirectMovieLink();  
+});
 </script>
 
 </body>
