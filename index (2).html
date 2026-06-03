@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoDokan - Premium Movie Streaming Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #080b11;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            line-height: 1.7;
+            padding: 20px 10px;
+        }
+
+        /* Dark Premium Neon Glow Background */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #e11d48 0%, transparent 70%);
+            filter: blur(120px);
+            top: -120px;
+            left: -120px;
+            z-index: -1;
+            opacity: 0.35;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+            filter: blur(120px);
+            bottom: -120px;
+            right: -120px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .wrapper {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #e11d48, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto 25px auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            outline: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Home Ad Container Box */
+        .home-ad-box {
+            width: 100%;
+            margin: 0 auto 25px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90px;
+            background: rgba(17, 24, 39, 0.5);
+            border-radius: 20px;
+            border: 1px dashed rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        /* Movie Grid */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .movie-item {
+            background: #111827;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .movie-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(225, 29, 72, 0.4);
+            box-shadow: 0 12px 30px rgba(225, 29, 72, 0.15);
+        }
+
+        .poster-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2/3;
+            background: #1f2937;
+        }
+
+        .poster-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .grid-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e11d48;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 10px;
+        }
+
+        .movie-meta-title {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #e5e7eb;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Glass Card */
+        .glass {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .notice-bar {
+            background: rgba(225, 29, 72, 0.2);
+            border-left: 4px solid #e11d48;
+            color: #fca5a5;
+            padding: 12px 10px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .notice-bar marquee {
+            display: block;
+            width: 100%;
+        }
+
+        .thumb-container {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .thumb-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,.75);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            color: #fff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .thumb-container:hover .play-icon {
+            background: #e11d48;
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.6);
+        }
+
+        .badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #e11d48;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 800;
+            margin-top: 22px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #9ca3af;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: all 0.3s;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .download {
+            background: linear-gradient(135deg, #e11d48, #be123c);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .telegram {
+            background: linear-gradient(135deg, #0088cc, #006699);
+            color: #fff;
+        }
+
+        #countdownBox {
+            display: none;
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.02);
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            color: #f59e0b;
+            border: 2px dashed rgba(245, 158, 11, 0.4);
+        }
+
+        /* Detail Page Ads Wrapper */
+        .ad-box {
+            margin: 24px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-unit {
+            display: flex;
+            justify-content: center;
+            min-height: 250px;
+            width: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            align-items: center;
+            border: 1px dashed rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        #homeScreen { display: block; }
+        #detailsScreen { display: none; }
+
+        /* ================= PREMIUM POPUP STYLES ================= */
+        .custom-popup-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 12, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .custom-popup-content {
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 24px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 24px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(225, 29, 72, 0.15);
+        }
+
+        .custom-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            font-size: 18px;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .custom-popup-close:hover {
+            color: #e11d48;
+        }
+
+        .custom-popup-content h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .custom-popup-content p {
+            font-size: 15px;
+            color: #9ca3af;
+            margin-bottom: 22px;
+        }
+
+        .custom-popup-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0088cc, #006699);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .custom-popup-btn:hover {
+            transform: scale(1.02);
+        }
+
+        @media(max-width:768px) {
+            .title { font-size: 24px; }
+            .btn { font-size: 16px; padding: 16px; }
+            .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="logo" onclick="showHomeScreen()">🔥 VideoDokan</div>
+
+    <!-- ================= SCREEN ১: হোমপেজ ================= -->
+    <div id="homeScreen">
+        <div class="search-container">
+            <input type="text" id="searchBar" class="search-input" placeholder="মুভি খুঁজুন..." onkeyup="searchMovies()">
+        </div>
+
+        <!-- হোমপেজ ব্যানার বিজ্ঞাপন -->
+        <div class="home-ad-box">
+            <script>
+              atOptions = {
+                'key' : 'b64ff9b8226e3efb0476834406596c12',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highperformanceformat.com/b64ff9b8226e3efb0476834406596c12/invoke.js"></script>
+        </div>
+
+        <div class="movie-grid" id="movieGridBox"></div>
+    </div>
+
+    <!-- ================= SCREEN ২: ডিটেইলস কার্ড ================= -->
+    <div id="detailsScreen">
+        <button class="back-btn" onclick="showHomeScreen()">⬅ ফিরে যান</button>
+        
+        <div class="glass">
+            <div class="notice-bar">
+                <marquee behavior="scroll" direction="left" scrollamount="6">
+                    📢 URGENT NOTICE: সবাইকে জানানো যাচ্ছে যে কিছু কিছু ভিডিও সরাসরি upload করা যায় না তাই নিচের জেনারেট বাটনে ক্লিক করুন!
+                </marquee>
+            </div>
+
+            <div class="thumb-container">
+                <span class="badge">TRENDING</span>
+                <img id="targetPoster" alt="Movie Thumbnail" src="" />
+                <div class="play-icon" onclick="triggerAdAndTimer('play')">▶</div>
+            </div>
+
+            <h1 class="title" id="targetTitle"></h1>
+
+            <div class="stats">
+                <div class="stat-box">👁 1.2M Views</div>
+                <div class="stat-box">❤️ 95K Likes</div>
+                <div class="stat-box">⬇ HD 1080p</div>
+            </div>
+
+            <a href="https://t.me/videodokan402" target="_blank" class="btn telegram">🚀 Join Telegram Channel</a>
+
+            <div id="countdownBox">⏳ Please wait <span id="time">15</span> seconds...</div>
+
+            <button id="mainActionButton" class="btn download" onclick="triggerAdAndTimer('download')">⬇ Generate Download Link</button>
+
+            <!-- Banner Ads Area (৩০০x২৫০ ব্যানার) -->
+            <div class="ad-box">
+                <div class="ad-unit">
+                    <script>
+                      atOptions = { 'key' : '9cba4eaca4929136b5c1693d95bb017e', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                    </script>
+                    <script src="https://www.highperformanceformat.com/9cba4eaca4929136b5c1693d95bb017e/invoke.js"></script>
+                </div>
+                <div class="ad-unit">
+                    <script>
+                      atOptions = { 'key' : '9cba4eaca4929136b5c1693d95bb017e', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                    </script>
+                    <script src="https://www.highperformanceformat.com/9cba4eaca4929136b5c1693d95bb017e/invoke.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">© 2026 VideoDokan • All Rights Reserved</div>
+</div>
+
+<!-- ================= PREMIUM TELEGRAM POPUP ================= -->
+<div class='custom-popup-bg' id='blogPopup'>
+    <div class='custom-popup-content'>
+        <span class='custom-popup-close' onclick='closeBlogPopup()'>&#10005;</span>
+        <h2>🎉 Welcome</h2>
+        <p>আরও নতুন নতুন ভাইরাল ভিডিও পেতে এখনই আমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন।</p>
+        <a href='https://t.me/videodokan402' style='text-decoration:none;' target='_blank' onclick="popupTelegramClick()">
+            <button class='custom-popup-btn'>🚀 Join Telegram</button>
+        </a>
+    </div>
+</div>
+
+<script>
+// ==================== আপনার মুভি ডাটাবেজ এরিয়া ====================
+const ADSTERRA_DIRECT_LINK = "https://www.highperformanceformat.com/your_direct_link_here"; // আপনার Adsterra Direct Link এখানে দিন
+
+const movieDatabase = [
+    {
+        id: 1,
+        title: "🔥 Premium Viral Video Collection 2026",
+        poster: "https://blogger.googleusercontent.com/img/a/AVvXsEgrHgjsim9V_ibMjwAMvH7geZNqfy7u8ID-1w708HqNlCVaahu4KWN9jASdsaXKs5YUcB9xhT2IS8hfHLq9UJT8Y78aTFMpTN46o9gfVAgqk90omx2ylCkJEH8hFFPcMWqRac55_2qCuWt_RIwCgxF0BdxMUCoGh8ejfg0GiTBTydw_EXskS3TDHVqjZCM",
+        playLink: "https://terasharefile.com/s/play_link_1",      
+        downloadLink: "https://terasharefile.com/s/download_link_1" 
+    },
+    {
+        id: 2,
+        title: "🎬 Pushpa 2: The Rule (2025)",
+        poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format&fit=crop&q=60", 
+        playLink: "https://terasharefile.com/s/play_link_2",      
+        downloadLink: "https://terasharefile.com/s/download_link_2" 
+    }
+];
+// ==========================================================
+
+function renderMovies(movies) {
+    const grid = document.getElementById('movieGridBox');
+    grid.innerHTML = "";
+    movies.forEach(movie => {
+        const item = document.createElement('div');
+        item.className = 'movie-item';
+        // মুভিতে ক্লিক করলে পপআপ আসবে
+        item.onclick = () => triggerMoviePopup(movie.id);
+        item.innerHTML = `
+            <div class="poster-wrap"><span class="grid-badge">New</span><img src="${movie.poster}" alt="${movie.title}"></div>
+            <div class="movie-meta-title">${movie.title}</div>
+        `;
+        grid.appendChild(item);
+    });
+}
+
+function searchMovies() {
+    const query = document.getElementById('searchBar').value.toLowerCase();
+    const filtered = movieDatabase.filter(m => m.title.toLowerCase().includes(query));
+    renderMovies(filtered);
+}
+
+let selectedPlayLink = "";
+let selectedDownloadLink = "";
+let finalRedirectLink = "";
+let activeTimer = null;
+let currentPendingMovieId = null; // মুভি আইডি ট্র্যাক রাখার জন্য
+
+// ১. সাইটে ঢোকার সময় অটোমেটিক পপআপ দেখানোর স্ক্রিপ্ট (৩ সেকেন্ড পর)
+setTimeout(() => {
+    // যদি ইউজার ইতিমধ্যে কোনো মুভিতে ক্লিক না করে থাকে, তবেই অটো পপআপ আসবে
+    if (document.getElementById('blogPopup').style.display !== 'flex') {
+        currentPendingMovieId = null; // অটো পপআপের জন্য মুভি আইডি ফাঁকা থাকবে
+        document.getElementById('blogPopup').style.display = 'flex';
+    }
+}, 3000);
+
+// ২. হোম পেজের মুভিতে ক্লিক করার পর পপআপ দেখানোর স্ক্রিপ্ট
+function triggerMoviePopup(id) {
+    currentPendingMovieId = id; // মুভি আইডি সেভ করা হলো
+    document.getElementById('blogPopup').style.display = 'flex'; // পপআপ শো হলো
+}
+
+// ৩. পপআপের ক্লোজ (X) বাটনে ক্লিক করলে অ্যাড আসবে এবং মুভি থাকলে মুভি পেজে যাবে
+function closeBlogPopup() {
+    document.getElementById('blogPopup').style.display = 'none';
+    // বিজ্ঞাপনের ডাইরেক্ট লিংকটি নতুন ট্যাবে ওপেন হবে
+    window.open('https://www.effectivegatecpm.com/v1ja5a8iei?key=51349c86e5fbf4f4ef87f2543144b9bd', '_blank');
+    
+    // মুভিতে ক্লিক করে পপআপ এসে থাকলে মুভি ডিটেইলস পেজ ওপেন হবে
+    if (currentPendingMovieId !== null) {
+        openMovieDetails(currentPendingMovieId);
+        currentPendingMovieId = null;
+    }
+}
+
+// ৪. পপআপের টেলিগ্রাম বাটনে ক্লিক করলে ডিটেইলস পেজে নিয়ে যাবে
+function popupTelegramClick() {
+    setTimeout(() => {
+        document.getElementById('blogPopup').style.display = 'none';
+        if (currentPendingMovieId !== null) {
+            openMovieDetails(currentPendingMovieId);
+            currentPendingMovieId = null;
+        }
+    }, 500);
+}
+
+// মুভি ডিটেইলস স্ক্রিন ওপেন করার মূল ফাংশন
+function openMovieDetails(id) {
+    const movie = movieDatabase.find(m => m.id === id);
+    if(!movie) return;
+
+    selectedPlayLink = movie.playLink;
+    selectedDownloadLink = movie.downloadLink;
+    document.getElementById('targetPoster').src = movie.poster;
+    document.getElementById('targetTitle').innerText = movie.title;
+
+    if(activeTimer) clearInterval(activeTimer);
+    resetActionButtons();
+
+    document.getElementById('homeScreen').style.display = 'none';
+    document.getElementById('detailsScreen').style.display = 'block';
+    window.scrollTo(0,0);
+}
+
+function resetActionButtons() {
+    const actionBtn = document.getElementById('mainActionButton');
+    const countdownBox = document.getElementById('countdownBox');
+    actionBtn.style.display = 'block';
+    actionBtn.innerText = "⬇ Generate Download Link";
+    actionBtn.style.background = "linear-gradient(135deg, #e11d48, #be123c)";
+    actionBtn.setAttribute("onclick", "triggerAdAndTimer('download')");
+    countdownBox.style.display = 'none';
+}
+
+function showHomeScreen() {
+    document.getElementById('detailsScreen').style.display = 'none';
+    document.getElementById('homeScreen').style.display = 'block';
+}
+
+function triggerAdAndTimer(type) {
+    if (type === 'play') {
+        finalRedirectLink = selectedPlayLink;
+    } else {
+        finalRedirectLink = selectedDownloadLink;
+    }
+
+    window.open(ADSTERRA_DIRECT_LINK, '_blank');
+
+    let time = 15;
+    const countdownBox = document.getElementById('countdownBox');
+    const actionBtn = document.getElementById('mainActionButton');
+    
+    actionBtn.style.display = 'none';
+    countdownBox.style.display = 'block';
+    document.getElementById('time').innerText = time;
+
+    activeTimer = setInterval(function(){
+        time--;
+        document.getElementById('time').innerText = time;
+        if(time <= 0){
+            clearInterval(activeTimer);
+            countdownBox.style.display = 'none';
+            
+            window.open(finalRedirectLink, '_blank');
+
+            actionBtn.style.display = 'block';
+            actionBtn.innerText = "📥 Click to open link again";
+            actionBtn.style.background = "linear-gradient(135deg, #22c55e, #15803d)";
+            actionBtn.setAttribute("onclick", `window.open('${finalRedirectLink}', '_blank')`);
+        }
+    }, 1000);
+}
+
+renderMovies(movieDatabase);
+</script>
+
+</body>
+</html>
