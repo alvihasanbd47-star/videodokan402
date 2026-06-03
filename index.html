@@ -445,7 +445,12 @@
         <div class="search-container">
             <input type="text" id="searchBar" class="search-input" placeholder="মুভি খুঁজুন..." onkeyup="searchMovies()">
         </div>
-
+<div class="category-container" style="text-align: center; margin: 15px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+    <button class="cat-btn active" onclick="filterCategory('All')" style="background: #ff0055; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">All</button>
+    <button class="cat-btn" onclick="filterCategory('Action')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Action</button>
+    <button class="cat-btn" onclick="filterCategory('Romantic')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Romantic</button>
+    <button class="cat-btn" onclick="filterCategory('Viral')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Viral</button>
+</div>
         <!-- হোমপেজ ব্যানার বিজ্ঞাপন -->
         <div class="home-ad-box">
             <script>
@@ -549,6 +554,7 @@ const movieDatabase = [
         {
         id: 2,
         title: "🎬 Pushpa 2: The Rule (2025)",
+        category: "Viral", // <-- এই মুভিটি 'Viral' ক্যাটাগরির
         poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format&fit=crop&q=60", 
         playLink: "https://terasharefile.com/s/play_link_2",      
         downloadLink: "https://terasharefile.com/s/download_link_2" 
@@ -692,6 +698,39 @@ function triggerAdAndTimer(type) {
 }
 
 renderMovies(movieDatabase);
+// ক্যাটাগরি ফিল্টার করার সঠিক ফাংশন
+function filterCategory(categoryName) {
+    // ১. বাটনগুলোর কালার পরিবর্তন করা
+    const buttons = document.querySelectorAll('.cat-btn');
+    buttons.forEach(btn => {
+        if (btn.innerText === categoryName) {
+            btn.style.background = '#ff0055';
+            btn.style.borderColor = '#ff0055';
+        } else {
+            btn.style.background = '#222';
+            btn.style.borderColor = '#ff0055';
+        }
+    });
+
+    // ২. ক্যাটাগরি অনুযায়ী মুভি ফিল্টার করা
+    let filteredMovies;
+    if (categoryName === 'All') {
+        filteredMovies = movieDatabase;
+    } else {
+        filteredMovies = movieDatabase.filter(movie => movie.category === categoryName);
+    }
+
+    // ৩. আপনার সাইটের আসল ফাংশনটি কল করা (যা স্ক্রিনে মুভি দেখায়)
+    if (typeof displayMovies === 'function') {
+        displayMovies(filteredMovies);
+    } else if (typeof renderMovies === 'function') {
+        renderMovies(filteredMovies);
+    } else if (typeof loadMovies === 'function') {
+        loadMovies(filteredMovies);
+    } else if (typeof showMovies === 'function') {
+        showMovies(filteredMovies);
+    }
+}
 </script>
 
 </body>
