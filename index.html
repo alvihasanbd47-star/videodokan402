@@ -12,16 +12,19 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: auto;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #080b11;
             color: #f3f4f6;
             overflow-x: hidden;
-            line-height: 1.7;
+            line-height: 1.6;
             padding: 20px 10px;
         }
 
-        /* Dark Premium Neon Glow Background */
         body::before {
             content: '';
             position: fixed;
@@ -33,6 +36,7 @@
             left: -120px;
             z-index: -1;
             opacity: 0.35;
+            will-change: transform;
         }
 
         body::after {
@@ -46,6 +50,7 @@
             right: -120px;
             z-index: -1;
             opacity: 0.3;
+            will-change: transform;
         }
 
         .wrapper {
@@ -84,7 +89,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
-        /* Home Ad Container Box */
         .home-ad-box {
             width: 100%;
             margin: 0 auto 25px auto;
@@ -99,7 +103,6 @@
             padding: 10px;
         }
 
-        /* Movie Grid */
         .movie-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -113,11 +116,11 @@
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 8px 25px rgba(0,0,0,.3);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.15s ease, border-color 0.15s ease;
         }
 
         .movie-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             border-color: rgba(225, 29, 72, 0.4);
             box-shadow: 0 12px 30px rgba(225, 29, 72, 0.15);
         }
@@ -158,7 +161,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Glass Card */
         .glass {
             background: rgba(17, 24, 39, 0.75);
             backdrop-filter: blur(20px);
@@ -200,18 +202,20 @@
 
         .thumb-container {
             position: relative;
-            max-width: 250px:
-            height: 350px;
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 16/9;
             margin: 0 auto;
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: #0d1117;
         }
 
         .thumb-container img {
             width: 100%;
-            height: auto;
+            height: 100%;
             display: block;
             object-fit: cover;
         }
@@ -222,16 +226,17 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0,0,0,.75);
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 34px;
+            font-size: 28px;
             color: #fff;
-            transition: all 0.3s ease;
+            transition: all 0.15s ease;
             cursor: pointer;
+            z-index: 5;
         }
 
         .thumb-container:hover .play-icon {
@@ -279,7 +284,6 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Interaction Buttons */
         .interaction-container {
             display: flex;
             gap: 12px;
@@ -298,7 +302,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             color: #fff;
         }
 
@@ -329,7 +333,7 @@
             font-weight: 700;
             cursor: pointer;
             margin-top: 16px;
-            transition: all 0.3s;
+            transition: all 0.15s;
             display: block;
             text-align: center;
             text-decoration: none;
@@ -359,7 +363,6 @@
             border: 2px dashed rgba(245, 158, 11, 0.4);
         }
 
-        /* Detail Page Ads Wrapper */
         .ad-box {
             margin: 24px auto;
             display: flex;
@@ -391,7 +394,6 @@
         #homeScreen { display: block; }
         #detailsScreen { display: none; }
 
-        /* ================= PREMIUM POPUP STYLES ================= */
         .custom-popup-bg {
             position: fixed;
             top: 0;
@@ -426,7 +428,6 @@
             font-size: 18px;
             color: #9ca3af;
             cursor: pointer;
-            transition: color 0.2s;
         }
 
         .custom-popup-close:hover {
@@ -457,54 +458,102 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
-            transition: transform 0.2s;
+            transition: transform 0.15s;
         }
 
         .custom-popup-btn:hover {
             transform: scale(1.02);
         }
 
+        /* স্পেশাল ফুল স্ক্রিন হালকা লোডিং অ্যানিমেশন */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(8, 11, 17, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .page-loader.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(225, 29, 72, 0.1);
+            border-left-color: #e11d48;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        .loader-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #e5e7eb;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media(max-width:768px) {
             .title { font-size: 24px; }
             .btn { font-size: 16px; padding: 16px; }
             .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .thumb-container { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<!-- Age Verification Popup Start -->
+<div class="page-loader" id="pageLoader">
+    <div class="spinner"></div>
+    <div class="loader-text">Loading Details...</div>
+</div>
+
 <div id="ageOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px); z-index: 999999; display: none; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; padding: 20px; box-sizing: border-box;">
     <div style="background: #141414; border: 2px solid #ff0055; padding: 40px 30px; border-radius: 15px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(255, 0, 85, 0.3); color: #fff;">
         <div style="font-size: 50px; color: #ff0055; margin-bottom: 15px;">⚠️</div>
-        <h2 style="font-size: 26px; margin: 0 0 15px 0; color: #ff0055; font-weight: bold; uppercase; letter-spacing: 1px;">WARNING: 18+ ONLY</h2>
+        <h2 style="font-size: 26px; margin: 0 0 15px 0; color: #ff0055; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">WARNING: 18+ ONLY</h2>
         <p style="font-size: 15px; line-height: 1.6; color: #cccccc; margin: 0 0 30px 0;">
             এই ওয়েবসাইটটিতে প্রাপ্তবয়স্কদের জন্য উপযোগী কনটেন্ট বা মুভি থাকতে পারে। আপনার বয়স কি ১৮ বছর বা তার বেশি?
         </p>
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <button onclick="acceptAge()" style="background: #ff0055; color: #fff; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); flex: 1; min-width: 140px;">
+            <button onclick="acceptAge()" style="background: #ff0055; color: #fff; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); flex: 1; min-width: 140px;">
                 হ্যাঁ, আমি ১৮+
             </button>
-            <button onclick="leaveSite()" style="background: #222; color: #fff; border: 2px solid #555; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; flex: 1; min-width: 140px;">
+            <button onclick="leaveSite()" style="background: #222; color: #fff; border: 2px solid #555; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; flex: 1; min-width: 140px;">
                 না, বের হব
             </button>
         </div>
     </div>
 </div>
-<!-- Age Verification Popup End -->
 
-<!-- Urgent Notice Bar Start -->
 <div class="notice-bar" id="homeNotice" style="display: block;">
     <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
         📢 <b>জরুরি নোটিশ:</b> আমাদের সাইটের কোনো মুভি বা ভিডিও প্লে করতে সমস্যা হলে অথবা লিংক কাজ না করলে, দ্রুত আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে জানান। নতুন নতুন মুভি সবার আগে পেতে সাইটটি বুকমার্ক করে রাখুন! ধন্যবাদ। 🔥🎬
     </marquee>
 </div>
-<!-- Urgent Notice Bar End -->
 
 <div class="wrapper">
     <div class="logo" onclick="goToHome()">🔥 VideoDokan</div>
 
-    <!-- ================= SCREEN ১: হোমপেজ ================= -->
     <div id="homeScreen">
         <div class="search-container">
             <input type="text" id="searchBar" class="search-input" placeholder="মুভি খুঁজুন..." onkeyup="searchMovies()">
@@ -517,7 +566,6 @@
             <button class="cat-btn" onclick="filterCategory('Viral')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Viral</button>
         </div>
 
-        <!-- হোমপেজ ব্যানার বিজ্ঞাপন -->
         <div class="home-ad-box">
             <script>
               atOptions = {
@@ -534,7 +582,6 @@
         <div class="movie-grid" id="movieGridBox"></div>
     </div>
 
-    <!-- ================= SCREEN ২: ডিটেইলস কার্ড ================= -->
     <div id="detailsScreen">
         <button class="back-btn" onclick="goToHome()">⬅ ফিরে যান</button>
         
@@ -553,14 +600,12 @@
 
             <h1 class="title" id="targetTitle"></h1>
 
-            <!-- Stats Bar -->
             <div class="stats">
-                <div class="stat-box" id="viewCountBox">👁 0 Views</div>
-                <div class="stat-box" id="likeCountBox">❤️ 95,000 Likes</div>
+                <div class="stat-box" id="viewCountBox">👁️ Loading Views...</div>
+                <div class="stat-box" id="likeCountBox">❤️ Loading Likes...</div>
                 <div class="stat-box">⬇ HD 1080p</div>
             </div>
 
-            <!-- Like and Share Buttons Area -->
             <div class="interaction-container">
                 <button class="btn-like" id="likeBtn" onclick="toggleLike()">👍 Like</button>
                 <button class="btn-share" id="shareBtn" onclick="handleShare()">🔗 Share</button>
@@ -572,7 +617,6 @@
 
             <button id="mainActionButton" class="btn download" onclick="handleDownloadButtonClick()">⬇ Generate Download Link</button>
 
-            <!-- Banner Ads Area -->
             <div class="ad-box">
                 <div class="ad-unit">
                     <script>
@@ -593,7 +637,6 @@
     <div class="footer">© 2026 VideoDokan • All Rights Reserved</div>
 </div>
 
-<!-- ================= PREMIUM TELEGRAM POPUP ================= -->
 <div class='custom-popup-bg' id='blogPopup'>
     <div class='custom-popup-content'>
         <span class='custom-popup-close' onclick='closeBlogPopup()'>&#10005;</span>
@@ -606,14 +649,15 @@
 </div>
 
 <script>
-// ==================== আপনার মুভি ডাটাবেজ এরিয়া ====================
 const ADSTERRA_DIRECT_LINK = "https://www.effectivegatecpm.com/v1ja5a8iei?key=51349c86e5fbf4f4ef87f2543144b9bd";
 
-// এখানে 'slug' যুক্ত করা হয়েছে যা লিংকে মুভির নাম হিসেবে দেখাবে। (ছোট হাতের অক্ষর এবং স্পেসের বদলে ড্যাশ (-) ব্যবহার করবেন)
+// KVDB.IO গ্লোবাল এপিআই কনফিগারেশন 
+const KVDB_BUCKET_ID = "vdk_bucket_2026_prod"; 
+const KVDB_BASE_URL = `https://kvdb.io/${KVDB_BUCKET_ID}`;
+
 const movieDatabase = [
     {
         id: 1,
-        slug: "premium-viral-video-2026",
         title: "🔥 Premium Viral Video Collection 2026",
         category: "Viral",
         poster: "https://blogger.googleusercontent.com/img/a/AVvXsEgrHgjsim9V_ibMjwAMvH7geZNqfy7u8ID-1w708HqNlCVaahu4KWN9jASdsaXKs5YUcB9xhT2IS8hfHLq9UJT8Y78aTFMpTN46o9gfVAgqk90omx2ylCkJEH8hFFPcMWqRac55_2qCuWt_RIwCgxF0BdxMUCoGh8ejfg0GiTBTydw_EXskS3TDHVqjZCM",
@@ -624,7 +668,6 @@ const movieDatabase = [
     },
     {
         id: 2,
-        slug: "pushpa-2-the-rule",
         title: "🎬 Pushpa 2: The Rule (2025)",
         category: "Action",
         poster: "https://i.ibb.co.com/wFqmqs5L/image.png", 
@@ -634,7 +677,9 @@ const movieDatabase = [
         baseLikes: 64200
     }
 ];
-// ==========================================================
+
+const movieMap = {};
+movieDatabase.forEach(m => movieMap[m.id] = m);
 
 let selectedPlayLink = "";
 let selectedDownloadLink = "";
@@ -645,17 +690,17 @@ let currentMovieId = null;
 
 function renderMovies(movies) {
     const grid = document.getElementById('movieGridBox');
-    grid.innerHTML = "";
-    movies.forEach(movie => {
-        const item = document.createElement('div');
-        item.className = 'movie-item';
-        item.onclick = () => triggerMoviePopup(movie.id);
-        item.innerHTML = `
-            <div class="poster-wrap"><span class="grid-badge">New</span><img src="${movie.poster}" alt="${movie.title}"></div>
-            <div class="movie-meta-title">${movie.title}</div>
+    let html = "";
+    for(let i=0; i<movies.length; i++) {
+        const movie = movies[i];
+        html += `
+            <div class="movie-item" onclick="triggerMoviePopup(${movie.id})">
+                <div class="poster-wrap"><span class="grid-badge">New</span><img src="${movie.poster}" alt="${movie.title}"></div>
+                <div class="movie-meta-title">${movie.title}</div>
+            </div>
         `;
-        grid.appendChild(item);
-    });
+    }
+    grid.innerHTML = html;
 }
 
 function searchMovies() {
@@ -664,11 +709,9 @@ function searchMovies() {
     renderMovies(filtered);
 }
 
-// সাইটে ঢোকার সময় অটো পপআপ (৩ সেকেন্ড পর)
 setTimeout(() => {
     if (localStorage.getItem('userAgeVerified') === 'true') {
         const urlParams = new URLSearchParams(window.location.search);
-        // যদি ইউআরএল এ ডিরেক্ট মুভির নাম (slug) থাকে তবে পপআপ আসবে না
         if (!urlParams.has('movie')) {
             if (document.getElementById('blogPopup').style.display !== 'flex') {
                 currentPendingMovieId = null;
@@ -688,10 +731,9 @@ function closeBlogPopup() {
     window.open(ADSTERRA_DIRECT_LINK, '_blank');
     
     if (currentPendingMovieId !== null) {
-        const movie = movieDatabase.find(m => m.id === currentPendingMovieId);
+        const movie = movieMap[currentPendingMovieId];
         if(movie) {
-            // আইডি এর বদলে মুভির নাম (slug) লিংকে পুশ করা হচ্ছে
-            window.history.pushState({}, '', `?movie=${movie.slug}`);
+            window.history.pushState({}, '', `?movie=${movie.id}`); 
             openMovieDetails(movie.id);
         }
         currentPendingMovieId = null;
@@ -702,20 +744,102 @@ function popupTelegramClick() {
     setTimeout(() => {
         document.getElementById('blogPopup').style.display = 'none';
         if (currentPendingMovieId !== null) {
-            const movie = movieDatabase.find(m => m.id === currentPendingMovieId);
+            const movie = movieMap[currentPendingMovieId];
             if(movie) {
-                window.history.pushState({}, '', `?movie=${movie.slug}`);
+                window.history.pushState({}, '', `?movie=${movie.id}`); 
                 openMovieDetails(movie.id);
             }
             currentPendingMovieId = null;
         }
-    }, 500);
+    }, 100);
 }
 
-function openMovieDetails(id) {
+// KVDB.IO গ্লোবাল লাইভ ভিউ এবং লাইক সিঙ্ক লজিক
+async function syncGlobalStats(movieId) {
+    const movie = movieMap[movieId];
+    if (!movie) return;
+
+    const viewKey = `movie_${movieId}_views`;
+    const likeKey = `movie_${movieId}_likes`;
+
+    try {
+        const [viewRes, likeRes] = await Promise.all([
+            fetch(`${KVDB_BASE_URL}/${viewKey}`).then(r => r.status === 404 ? "0" : r.text()),
+            fetch(`${KVDB_BASE_URL}/${likeKey}`).then(r => r.status === 404 ? "0" : r.text())
+        ]);
+
+        let globalViews = parseInt(viewRes) || 0;
+        let globalLikes = parseInt(likeRes) || 0;
+
+        if (!sessionStorage.getItem(`viewed_${movieId}`)) {
+            globalViews += 1;
+            sessionStorage.setItem(`viewed_${movieId}`, 'true');
+            fetch(`${KVDB_BASE_URL}/${viewKey}`, { method: 'POST', body: globalViews.toString() }).catch(() => {});
+        }
+
+        const totalViews = movie.baseViews + globalViews;
+        const totalLikes = movie.baseLikes + globalLikes;
+
+        if (totalViews >= 1000000) {
+            document.getElementById('viewCountBox').innerText = `👁️ ${(totalViews / 1000000).toFixed(2)}M Views`;
+        } else {
+            document.getElementById('viewCountBox').innerText = `👁️ ${totalViews.toLocaleString()} Views`;
+        }
+
+        document.getElementById('likeCountBox').innerText = `❤️ ${totalLikes.toLocaleString()} Likes`;
+
+    } catch (err) {
+        console.error("KVDB Error, fallback to base:", err);
+        document.getElementById('viewCountBox').innerText = `👁️ ${movie.baseViews.toLocaleString()} Views`;
+        document.getElementById('likeCountBox').innerText = `❤️ ${movie.baseLikes.toLocaleString()} Likes`;
+    }
+}
+
+async function toggleLike() {
+    const movie = movieMap[currentMovieId];
+    if (!movie) return;
+
+    const likeKey = `movie_${currentMovieId}_likes`;
+    const isLiked = localStorage.getItem(`movie_liked_${currentMovieId}`) === 'true';
+    const likeBtn = document.getElementById('likeBtn');
+
+    if (!isLiked) {
+        localStorage.setItem(`movie_liked_${currentMovieId}`, 'true');
+        likeBtn.classList.add('liked');
+        likeBtn.innerText = "❤️ Liked";
+    } else {
+        localStorage.removeItem(`movie_liked_${currentMovieId}`);
+        likeBtn.classList.remove('liked');
+        likeBtn.innerText = "👍 Like";
+    }
+
+    try {
+        let serverLikes = await fetch(`${KVDB_BASE_URL}/${likeKey}`).then(r => r.status === 404 ? "0" : r.text()).then(t => parseInt(t) || 0);
+
+        if (!isLiked) {
+            serverLikes += 1;
+        } else {
+            serverLikes = Math.max(0, serverLikes - 1);
+        }
+
+        await fetch(`${KVDB_BASE_URL}/${likeKey}`, { method: 'POST', body: serverLikes.toString() });
+        
+        const totalLikes = movie.baseLikes + serverLikes;
+        document.getElementById('likeCountBox').innerText = `❤️ ${totalLikes.toLocaleString()} Likes`;
+
+    } catch (error) {
+        console.error("Like sync failed:", error);
+    }
+}
+
+async function openMovieDetails(id) {
     document.getElementById('homeNotice').style.display = 'none';
-    const movie = movieDatabase.find(m => m.id === id);
+    const movie = movieMap[id];
     if(!movie) return;
+
+    // ১. ক্লিক করার সাথে সাথে স্ক্রিনে লোডার একটিভ হবে
+    const loader = document.getElementById('pageLoader');
+    loader.classList.add('active');
 
     currentMovieId = id; 
     selectedPlayLink = movie.playLink;
@@ -728,14 +852,6 @@ function openMovieDetails(id) {
     
     isFirstPlayClick = true; 
 
-    // ভিউ কাউন্ট প্রসেস
-    let currentSavedViews = localStorage.getItem(`movie_views_count_${currentMovieId}`) || 0;
-    currentSavedViews = parseInt(currentSavedViews) + 1;
-    localStorage.setItem(`movie_views_count_${currentMovieId}`, currentSavedViews);
-    
-    updateViewDisplay();
-
-    // লাইক চেক লজিক
     const likeBtn = document.getElementById('likeBtn');
     if (localStorage.getItem(`movie_liked_${currentMovieId}`) === 'true') {
         likeBtn.classList.add('liked');
@@ -744,11 +860,18 @@ function openMovieDetails(id) {
         likeBtn.classList.remove('liked');
         likeBtn.innerText = "👍 Like";
     }
-    updateLikeDisplay();
 
     document.getElementById('homeScreen').style.display = 'none';
     document.getElementById('detailsScreen').style.display = 'block';
     window.scrollTo(0,0);
+
+    // ২. ডাটাবেজ থেকে আসল ডেটা সিঙ্ক হওয়া পর্যন্ত ব্যাকগ্রাউন্ডে অপেক্ষা করবে
+    await syncGlobalStats(currentMovieId);
+
+    // ৩. ডেটা চলে আসলে লোডারটি স্মুথ ট্রানজিশনে বন্ধ হয়ে যাবে
+    setTimeout(() => {
+        loader.classList.remove('active');
+    }, 400); 
 }
 
 function resetActionButtons() {
@@ -768,56 +891,15 @@ function goToHome() {
     document.getElementById('homeScreen').style.display = 'block';
 }
 
-function updateViewDisplay() {
-    const movie = movieDatabase.find(m => m.id === currentMovieId);
-    if (!movie) return;
-
-    let extraViews = localStorage.getItem(`movie_views_count_${currentMovieId}`) || 0;
-    const totalViews = movie.baseViews + parseInt(extraViews);
-
-    if (totalViews >= 1000000) {
-        const formattedViews = (totalViews / 1000000).toFixed(2) + "M";
-        document.getElementById('viewCountBox').innerText = `👁 ${formattedViews} Views`;
-    } else {
-        document.getElementById('viewCountBox').innerText = `👁 ${totalViews.toLocaleString()} Views`;
-    }
-}
-
-function toggleLike() {
-    const likeBtn = document.getElementById('likeBtn');
-    const isLiked = localStorage.getItem(`movie_liked_${currentMovieId}`) === 'true';
-
-    if (!isLiked) {
-        localStorage.setItem(`movie_liked_${currentMovieId}`, 'true');
-        likeBtn.classList.add('liked');
-        likeBtn.innerText = "❤️ Liked";
-    } else {
-        localStorage.removeItem(`movie_liked_${currentMovieId}`);
-        likeBtn.classList.remove('liked');
-        likeBtn.innerText = "👍 Like";
-    }
-    updateLikeDisplay();
-}
-
-function updateLikeDisplay() {
-    const movie = movieDatabase.find(m => m.id === currentMovieId);
-    if (!movie) return;
-
-    const isLiked = localStorage.getItem(`movie_liked_${currentMovieId}`) === 'true';
-    const currentLikes = movie.baseLikes + (isLiked ? 1 : 0);
-    document.getElementById('likeCountBox').innerText = `❤️ ${currentLikes.toLocaleString()} Likes`;
-}
-
-// শেয়ার বাটনে ক্লিক করলে মুভির নাম সহ ইউনিক লিংক কপি হবে
 function handleShare() {
-    const movie = movieDatabase.find(m => m.id === currentMovieId);
+    const movie = movieMap[currentMovieId];
     if(!movie) return;
     
-    const shareUrl = window.location.origin + window.location.pathname + `?movie=${movie.slug}`;
+    const shareUrl = window.location.origin + window.location.pathname + `?movie=${movie.id}`; 
     navigator.clipboard.writeText(shareUrl).then(() => {
-        alert("✅ মুভি লিংক কপি হয়েছে! আপনার বন্ধুদের সাথে শেয়ার করুন।");
+        alert("✅ মুভি লিংক কপি হয়েছে! আপনার বন্ধুদের সাথে শেয়ার করুন।");
     }).catch(() => {
-        alert("✅ আপনার বন্ধুদের সাথে শেয়ার করুন!");
+        alert("✅ আপনার বন্ধুদের সাথে শেয়ার করুন!");
     });
     window.open(ADSTERRA_DIRECT_LINK, '_blank');
 }
@@ -869,13 +951,11 @@ function filterCategory(categoryName) {
         }
     });
 
-    let filteredMovies;
     if (categoryName === 'All') {
-        filteredMovies = movieDatabase;
+        renderMovies(movieDatabase);
     } else {
-        filteredMovies = movieDatabase.filter(movie => movie.category === categoryName);
+        renderMovies(movieDatabase.filter(m => m.category === categoryName));
     }
-    renderMovies(filteredMovies);
 }
 
 function acceptAge() {
@@ -897,26 +977,20 @@ function checkAgeVerification() {
     }
 }
 
-// এই ফাংশনটি ব্রাউজারের ইউআরএল থেকে মুভির নাম খুঁজে বের করে সরাসরি লোড করে দেয়
 function checkDirectMovieLink() {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('movie')) {
-        const movieSlug = urlParams.get('movie');
-        // ডাটাবেজ থেকে ম্যাচিং স্লাগ খোঁজা হচ্ছে
-        const targetMovie = movieDatabase.find(m => m.slug === movieSlug);
+        const movieId = parseInt(urlParams.get('movie')); 
+        const targetMovie = movieMap[movieId];
         if (targetMovie) {
             openMovieDetails(targetMovie.id);
-        } else {
-            renderMovies(movieDatabase);
+            return;
         }
-    } else {
-        renderMovies(movieDatabase);
     }
+    renderMovies(movieDatabase);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    checkAgeVerification();
-});
+window.addEventListener('DOMContentLoaded', checkAgeVerification);
 </script>
 
 </body>
