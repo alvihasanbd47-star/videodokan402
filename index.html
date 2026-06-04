@@ -200,8 +200,7 @@
 
         .thumb-container {
             position: relative;
-            max-width: 280px; /* চওড়া ২৮০ পিক্সেল লক */
-            height: 380px;    /* উচ্চতা ৩৮০ পিক্সেল লক */
+            max-width: 100%;
             margin: 0 auto;
             border-radius: 24px;
             overflow: hidden;
@@ -277,6 +276,47 @@
             font-weight: 600;
             color: #9ca3af;
             border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Interaction Buttons */
+        .interaction-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-like, .btn-share {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            color: #fff;
+        }
+
+        .btn-like {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-like.liked {
+            background: #e11d48;
+            border-color: #e11d48;
+            box-shadow: 0 0 15px rgba(225, 29, 72, 0.4);
+        }
+
+        .btn-share {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-share:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .btn {
@@ -433,31 +473,24 @@
 <body>
 
 <!-- Age Verification Popup Start -->
-<div id="ageOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px); z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; padding: 20px; box-sizing: border-box;">
+<div id="ageOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px); z-index: 999999; display: none; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; padding: 20px; box-sizing: border-box;">
     <div style="background: #141414; border: 2px solid #ff0055; padding: 40px 30px; border-radius: 15px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(255, 0, 85, 0.3); color: #fff;">
-        <div style="font-size: 50px; color: #ff0055; margin-bottom: 15px; animation: pulse 2s infinite;">⚠️</div>
+        <div style="font-size: 50px; color: #ff0055; margin-bottom: 15px;">⚠️</div>
         <h2 style="font-size: 26px; margin: 0 0 15px 0; color: #ff0055; font-weight: bold; uppercase; letter-spacing: 1px;">WARNING: 18+ ONLY</h2>
         <p style="font-size: 15px; line-height: 1.6; color: #cccccc; margin: 0 0 30px 0;">
             এই ওয়েবসাইটটিতে প্রাপ্তবয়স্কদের জন্য উপযোগী কনটেন্ট বা মুভি থাকতে পারে। আপনার বয়স কি ১৮ বছর বা তার বেশি?
         </p>
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <button onclick="acceptAge()" style="background: linear-gradient(135deg, #ffcc00, #ff0055); color: #fff; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); flex: 1; min-width: 140px;">
+            <button onclick="acceptAge()" style="background: #ff0055; color: #fff; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); flex: 1; min-width: 140px;">
                 হ্যাঁ, আমি ১৮+
             </button>
-            <button onclick="leaveSite()" style="background: linear-gradient(135deg, #ccc, #333); color: #fff; border: 2px solid #555; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; flex: 1; min-width: 140px;">
+            <button onclick="leaveSite()" style="background: #222; color: #fff; border: 2px solid #555; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.3s; flex: 1; min-width: 140px;">
                 না, বের হব
             </button>
         </div>
     </div>
 </div>
-
-<style>
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
-}
-</style>
+<!-- Age Verification Popup End -->
 
 <!-- Urgent Notice Bar Start -->
 <div class="notice-bar" id="homeNotice" style="display: block;">
@@ -468,20 +501,21 @@
 <!-- Urgent Notice Bar End -->
 
 <div class="wrapper">
-    <div class="logo" onclick="goToHomeScreen()">🔥 VideoDokan</div>
+    <div class="logo" onclick="goToHome()">🔥 VideoDokan</div>
 
     <!-- ================= SCREEN ১: হোমপেজ ================= -->
     <div id="homeScreen">
         <div class="search-container">
             <input type="text" id="searchBar" class="search-input" placeholder="মুভি খুঁজুন..." onkeyup="searchMovies()">
         </div>
+        
         <div class="category-container" style="text-align: center; margin: 15px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
             <button class="cat-btn active" onclick="filterCategory('All')" style="background: #ff0055; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">All</button>
             <button class="cat-btn" onclick="filterCategory('Action')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Action</button>
             <button class="cat-btn" onclick="filterCategory('Romantic')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Romantic</button>
             <button class="cat-btn" onclick="filterCategory('Viral')" style="background: #222; color: #fff; border: 1px solid #ff0055; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">Viral</button>
         </div>
-        
+
         <!-- হোমপেজ ব্যানার বিজ্ঞাপন -->
         <div class="home-ad-box">
             <script>
@@ -501,7 +535,7 @@
 
     <!-- ================= SCREEN ২: ডিটেইলস কার্ড ================= -->
     <div id="detailsScreen">
-        <button class="back-btn" onclick="goToHomeScreen()">⬅ ফিরে যান</button>
+        <button class="back-btn" onclick="goToHome()">⬅ ফিরে যান</button>
         
         <div class="glass">
             <div class="notice-bar">
@@ -513,22 +547,29 @@
             <div class="thumb-container">
                 <span class="badge">TRENDING</span>
                 <img id="targetPoster" alt="Movie Thumbnail" src="" />
-                <div class="play-icon" onclick="triggerAdAndTimer('play')">▶</div>
+                <div class="play-icon" onclick="handlePlayButtonClick()">▶</div>
             </div>
 
             <h1 class="title" id="targetTitle"></h1>
 
+            <!-- Stats Bar -->
             <div class="stats">
-                <div class="stat-box">👁 1.2M Views</div>
-                <div class="stat-box">❤️ 95K Likes</div>
+                <div class="stat-box" id="viewCountBox">👁 0 Views</div>
+                <div class="stat-box" id="likeCountBox">❤️ 95,000 Likes</div>
                 <div class="stat-box">⬇ HD 1080p</div>
+            </div>
+
+            <!-- Like and Share Buttons Area -->
+            <div class="interaction-container">
+                <button class="btn-like" id="likeBtn" onclick="toggleLike()">👍 Like</button>
+                <button class="btn-share" id="shareBtn" onclick="handleShare()">🔗 Share</button>
             </div>
 
             <a href="https://t.me/videodokan402" target="_blank" class="btn telegram">🚀 Join Telegram Channel</a>
 
             <div id="countdownBox">⏳ Please wait <span id="time">15</span> seconds...</div>
 
-            <button id="mainActionButton" class="btn download" onclick="triggerAdAndTimer('download')">⬇ Generate Download Link</button>
+            <button id="mainActionButton" class="btn download" onclick="handleDownloadButtonClick()">⬇ Generate Download Link</button>
 
             <!-- Banner Ads Area -->
             <div class="ad-box">
@@ -556,7 +597,7 @@
     <div class='custom-popup-content'>
         <span class='custom-popup-close' onclick='closeBlogPopup()'>&#10005;</span>
         <h2>🎉 Welcome</h2>
-        <p>আরও নতুন নতুন ভাইরাল ভিডিও পেতে এখনই আমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন.</p>
+        <p>আরও নতুন নতুন ভাইরাল ভিডিও পেতে এখনই আমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন।</p>
         <a href='https://t.me/videodokan402' style='text-decoration:none;' target='_blank' onclick="popupTelegramClick()">
             <button class='custom-popup-btn'>🚀 Join Telegram</button>
         </a>
@@ -564,33 +605,42 @@
 </div>
 
 <script>
-// ==================== মুভি ডাটাবেজ ====================
-const ADSTERRA_DIRECT_LINK = "https://www.effectivecpmnetwork.com/yra71gqgd?key=1f78606f4d1c65ee1c2903af4f30783a"; 
+// ==================== আপনার মুভি ডাটাবেজ এরিয়া ====================
+const ADSTERRA_DIRECT_LINK = "https://www.effectivegatecpm.com/v1ja5a8iei?key=51349c86e5fbf4f4ef87f2543144b9bd";
 
+// এখানে 'slug' যুক্ত করা হয়েছে যা লিংকে মুভির নাম হিসেবে দেখাবে। (ছোট হাতের অক্ষর এবং স্পেসের বদলে ড্যাশ (-) ব্যবহার করবেন)
 const movieDatabase = [
     {
         id: 1,
+        slug: "premium-viral-video-2026",
         title: "🔥 Premium Viral Video Collection 2026",
+        category: "Viral",
         poster: "https://blogger.googleusercontent.com/img/a/AVvXsEgrHgjsim9V_ibMjwAMvH7geZNqfy7u8ID-1w708HqNlCVaahu4KWN9jASdsaXKs5YUcB9xhT2IS8hfHLq9UJT8Y78aTFMpTN46o9gfVAgqk90omx2ylCkJEH8hFFPcMWqRac55_2qCuWt_RIwCgxF0BdxMUCoGh8ejfg0GiTBTydw_EXskS3TDHVqjZCM",
         playLink: "https://terasharefile.com/s/play_link_1",      
-        downloadLink: "https://terasharefile.com/s/download_link_1" 
+        downloadLink: "https://terasharefile.com/s/download_link_1",
+        baseViews: 1245300,
+        baseLikes: 95420 
     },
     {
         id: 2,
+        slug: "pushpa-2-the-rule",
         title: "🎬 Pushpa 2: The Rule (2025)",
+        category: "Action",
         poster: "https://i.ibb.co.com/wFqmqs5L/image.png", 
         playLink: "https://terasharefile.com/s/play_link_2",      
-        downloadLink: "https://terasharefile.com/s/download_link_2" 
-    },
-    {
-        id: 3,
-        title: "🎬 Pushpa 2: The Rule (2025) Viral Version",
-        category: "Viral",
-        poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format&fit=crop&q=60", 
-        playLink: "https://terasharefile.com/s/play_link_2",      
-        downloadLink: "https://terasharefile.com/s/download_link_2" 
+        downloadLink: "https://terasharefile.com/s/download_link_2",
+        baseViews: 854200,
+        baseLikes: 64200
     }
 ];
+// ==========================================================
+
+let selectedPlayLink = "";
+let selectedDownloadLink = "";
+let activeTimer = null;
+let currentPendingMovieId = null;
+let isFirstPlayClick = true; 
+let currentMovieId = null;
 
 function renderMovies(movies) {
     const grid = document.getElementById('movieGridBox');
@@ -598,7 +648,7 @@ function renderMovies(movies) {
     movies.forEach(movie => {
         const item = document.createElement('div');
         item.className = 'movie-item';
-        item.onclick = () => goToMoviePage(movie.id);
+        item.onclick = () => triggerMoviePopup(movie.id);
         item.innerHTML = `
             <div class="poster-wrap"><span class="grid-badge">New</span><img src="${movie.poster}" alt="${movie.title}"></div>
             <div class="movie-meta-title">${movie.title}</div>
@@ -613,55 +663,49 @@ function searchMovies() {
     renderMovies(filtered);
 }
 
-let selectedPlayLink = "";
-let selectedDownloadLink = "";
-let finalRedirectLink = "";
-let activeTimer = null;
-let currentPendingMovieId = null;
-
-// ১. সাইটে ঢোকার সময় অটোমেটিক পপআপ দেখানোর স্ক্রিপ্ট (৩ সেকেন্ড পর)
-// হোম পেজ বা মুভি লিংক—সবক্ষেত্রেই ৩ সেকেন্ড পর পপআপটি আসবে
+// সাইটে ঢোকার সময় অটো পপআপ (৩ সেকেন্ড পর)
 setTimeout(() => {
-    if (document.getElementById('blogPopup').style.display !== 'flex') {
+    if (localStorage.getItem('userAgeVerified') === 'true') {
         const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get('movie');
-        if (movieId) {
-            currentPendingMovieId = parseInt(movieId);
-        } else {
-            currentPendingMovieId = null;
+        // যদি ইউআরএল এ ডিরেক্ট মুভির নাম (slug) থাকে তবে পপআপ আসবে না
+        if (!urlParams.has('movie')) {
+            if (document.getElementById('blogPopup').style.display !== 'flex') {
+                currentPendingMovieId = null;
+                document.getElementById('blogPopup').style.display = 'flex';
+            }
         }
-        
-        document.getElementById('blogPopup').style.display = 'flex';
     }
 }, 3000);
 
-function goToMoviePage(movieId) {
-    window.location.search = `?movie=${movieId}`;
+function triggerMoviePopup(id) {
+    currentPendingMovieId = id;
+    document.getElementById('blogPopup').style.display = 'flex';
 }
 
-function goToHomeScreen() {
-    window.location.search = "";
-}
-
-// ৪. পপআপের ক্লোজ (X) বাটনে ক্লিক করার ও অ্যাড ওপেন হওয়ার সিস্টেম
 function closeBlogPopup() {
     document.getElementById('blogPopup').style.display = 'none';
-    window.open('https://www.effectivegatecpm.com/v1ja5a8iei?key=51349c86e5fbf4f4ef87f2543144b9bd', '_blank');
+    window.open(ADSTERRA_DIRECT_LINK, '_blank');
     
-    const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.get('movie') && currentPendingMovieId !== null) {
-        goToMoviePage(currentPendingMovieId);
+    if (currentPendingMovieId !== null) {
+        const movie = movieDatabase.find(m => m.id === currentPendingMovieId);
+        if(movie) {
+            // আইডি এর বদলে মুভির নাম (slug) লিংকে পুশ করা হচ্ছে
+            window.history.pushState({}, '', `?movie=${movie.slug}`);
+            openMovieDetails(movie.id);
+        }
         currentPendingMovieId = null;
     }
 }
 
-// ৫. পপআপের টেলিগ্রাম বাটনে ক্লিক
 function popupTelegramClick() {
     setTimeout(() => {
         document.getElementById('blogPopup').style.display = 'none';
-        const urlParams = new URLSearchParams(window.location.search);
-        if (!urlParams.get('movie') && currentPendingMovieId !== null) {
-            goToMoviePage(currentPendingMovieId);
+        if (currentPendingMovieId !== null) {
+            const movie = movieDatabase.find(m => m.id === currentPendingMovieId);
+            if(movie) {
+                window.history.pushState({}, '', `?movie=${movie.slug}`);
+                openMovieDetails(movie.id);
+            }
             currentPendingMovieId = null;
         }
     }, 500);
@@ -672,6 +716,7 @@ function openMovieDetails(id) {
     const movie = movieDatabase.find(m => m.id === id);
     if(!movie) return;
 
+    currentMovieId = id; 
     selectedPlayLink = movie.playLink;
     selectedDownloadLink = movie.downloadLink;
     document.getElementById('targetPoster').src = movie.poster;
@@ -679,6 +724,26 @@ function openMovieDetails(id) {
 
     if(activeTimer) clearInterval(activeTimer);
     resetActionButtons();
+    
+    isFirstPlayClick = true; 
+
+    // ভিউ কাউন্ট প্রসেস
+    let currentSavedViews = localStorage.getItem(`movie_views_count_${currentMovieId}`) || 0;
+    currentSavedViews = parseInt(currentSavedViews) + 1;
+    localStorage.setItem(`movie_views_count_${currentMovieId}`, currentSavedViews);
+    
+    updateViewDisplay();
+
+    // লাইক চেক লজিক
+    const likeBtn = document.getElementById('likeBtn');
+    if (localStorage.getItem(`movie_liked_${currentMovieId}`) === 'true') {
+        likeBtn.classList.add('liked');
+        likeBtn.innerText = "❤️ Liked";
+    } else {
+        likeBtn.classList.remove('liked');
+        likeBtn.innerText = "👍 Like";
+    }
+    updateLikeDisplay();
 
     document.getElementById('homeScreen').style.display = 'none';
     document.getElementById('detailsScreen').style.display = 'block';
@@ -691,17 +756,81 @@ function resetActionButtons() {
     actionBtn.style.display = 'block';
     actionBtn.innerText = "⬇ Generate Download Link";
     actionBtn.style.background = "linear-gradient(135deg, #e11d48, #be123c)";
-    actionBtn.setAttribute("onclick", "triggerAdAndTimer('download')");
+    actionBtn.setAttribute("onclick", "handleDownloadButtonClick()");
     countdownBox.style.display = 'none';
 }
 
-function triggerAdAndTimer(type) {
-    if (type === 'play') {
-        finalRedirectLink = selectedPlayLink;
-    } else {
-        finalRedirectLink = selectedDownloadLink;
-    }
+function goToHome() {
+    window.history.pushState({}, '', window.location.pathname);
+    document.getElementById('homeNotice').style.display = 'block';
+    document.getElementById('detailsScreen').style.display = 'none';
+    document.getElementById('homeScreen').style.display = 'block';
+}
 
+function updateViewDisplay() {
+    const movie = movieDatabase.find(m => m.id === currentMovieId);
+    if (!movie) return;
+
+    let extraViews = localStorage.getItem(`movie_views_count_${currentMovieId}`) || 0;
+    const totalViews = movie.baseViews + parseInt(extraViews);
+
+    if (totalViews >= 1000000) {
+        const formattedViews = (totalViews / 1000000).toFixed(2) + "M";
+        document.getElementById('viewCountBox').innerText = `👁 ${formattedViews} Views`;
+    } else {
+        document.getElementById('viewCountBox').innerText = `👁 ${totalViews.toLocaleString()} Views`;
+    }
+}
+
+function toggleLike() {
+    const likeBtn = document.getElementById('likeBtn');
+    const isLiked = localStorage.getItem(`movie_liked_${currentMovieId}`) === 'true';
+
+    if (!isLiked) {
+        localStorage.setItem(`movie_liked_${currentMovieId}`, 'true');
+        likeBtn.classList.add('liked');
+        likeBtn.innerText = "❤️ Liked";
+    } else {
+        localStorage.removeItem(`movie_liked_${currentMovieId}`);
+        likeBtn.classList.remove('liked');
+        likeBtn.innerText = "👍 Like";
+    }
+    updateLikeDisplay();
+}
+
+function updateLikeDisplay() {
+    const movie = movieDatabase.find(m => m.id === currentMovieId);
+    if (!movie) return;
+
+    const isLiked = localStorage.getItem(`movie_liked_${currentMovieId}`) === 'true';
+    const currentLikes = movie.baseLikes + (isLiked ? 1 : 0);
+    document.getElementById('likeCountBox').innerText = `❤️ ${currentLikes.toLocaleString()} Likes`;
+}
+
+// শেয়ার বাটনে ক্লিক করলে মুভির নাম সহ ইউনিক লিংক কপি হবে
+function handleShare() {
+    const movie = movieDatabase.find(m => m.id === currentMovieId);
+    if(!movie) return;
+    
+    const shareUrl = window.location.origin + window.location.pathname + `?movie=${movie.slug}`;
+    navigator.clipboard.writeText(shareUrl).then(() => {
+        alert("✅ মুভি লিংক কপি হয়েছে! আপনার বন্ধুদের সাথে শেয়ার করুন।");
+    }).catch(() => {
+        alert("✅ আপনার বন্ধুদের সাথে শেয়ার করুন!");
+    });
+    window.open(ADSTERRA_DIRECT_LINK, '_blank');
+}
+
+function handlePlayButtonClick() {
+    if (isFirstPlayClick) {
+        window.open(ADSTERRA_DIRECT_LINK, '_blank');
+        isFirstPlayClick = false; 
+    } else {
+        window.open(selectedPlayLink, '_blank');
+    }
+}
+
+function handleDownloadButtonClick() {
     window.open(ADSTERRA_DIRECT_LINK, '_blank');
 
     let time = 15;
@@ -719,12 +848,10 @@ function triggerAdAndTimer(type) {
             clearInterval(activeTimer);
             countdownBox.style.display = 'none';
             
-            window.open(finalRedirectLink, '_blank');
-
             actionBtn.style.display = 'block';
-            actionBtn.innerText = "📥 Click to open link again";
+            actionBtn.innerText = "📥 Get Link";
             actionBtn.style.background = "linear-gradient(135deg, #22c55e, #15803d)";
-            actionBtn.setAttribute("onclick", `window.open('${finalRedirectLink}', '_blank')`);
+            actionBtn.setAttribute("onclick", `window.open('${selectedDownloadLink}', '_blank')`);
         }
     }, 1000);
 }
@@ -753,6 +880,7 @@ function filterCategory(categoryName) {
 function acceptAge() {
     localStorage.setItem('userAgeVerified', 'true');
     document.getElementById('ageOverlay').style.display = 'none';
+    checkDirectMovieLink();
 }
 
 function leaveSite() {
@@ -762,28 +890,31 @@ function leaveSite() {
 function checkAgeVerification() {
     if (localStorage.getItem('userAgeVerified') === 'true') {
         document.getElementById('ageOverlay').style.display = 'none';
+        checkDirectMovieLink();
     } else {
         document.getElementById('ageOverlay').style.display = 'flex';
     }
 }
 
+// এই ফাংশনটি ব্রাউজারের ইউআরএল থেকে মুভির নাম খুঁজে বের করে সরাসরি লোড করে দেয়
 function checkDirectMovieLink() {
     const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get('movie');
-
-    if (movieId) {
-        const selectedMovie = movieDatabase.find(movie => movie.id == movieId);
-        if (selectedMovie) {
-            openMovieDetails(selectedMovie.id);
+    if (urlParams.has('movie')) {
+        const movieSlug = urlParams.get('movie');
+        // ডাটাবেজ থেকে ম্যাচিং স্লাগ খোঁজা হচ্ছে
+        const targetMovie = movieDatabase.find(m => m.slug === movieSlug);
+        if (targetMovie) {
+            openMovieDetails(targetMovie.id);
+        } else {
+            renderMovies(movieDatabase);
         }
+    } else {
+        renderMovies(movieDatabase);
     }
 }
 
-renderMovies(movieDatabase);
-
 window.addEventListener('DOMContentLoaded', () => {
-    checkAgeVerification(); 
-    checkDirectMovieLink();  
+    checkAgeVerification();
 });
 </script>
 
